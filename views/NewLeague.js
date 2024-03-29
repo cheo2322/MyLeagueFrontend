@@ -26,7 +26,9 @@ export default function NewLeague({ navigation }) {
         }),
       })
         .then((response) => response.json())
-        .then((data) => navigation.navigate('New', { id: data.leagueId }));
+        .then((data) =>
+          navigation.navigate('LeagueImageSelector', { id: data.leagueId })
+        );
     } catch (error) {
       console.error(error);
     }
