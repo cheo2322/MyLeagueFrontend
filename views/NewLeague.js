@@ -4,7 +4,7 @@ import Button from '../components/Button';
 
 import { API_BASE_URL } from '@env';
 
-export default function NewLeague() {
+export default function NewLeague({ navigation }) {
   const [name, onChangeName] = useState('');
   const [location, onChangeLocation] = useState('');
   const [field, onChangeField] = useState('');
@@ -12,7 +12,7 @@ export default function NewLeague() {
 
   const postLeague = async () => {
     try {
-      const result = await fetch(`${API_BASE_URL}/my_league/v1/league`, {
+      await fetch(`${API_BASE_URL}/my_league/v1/league`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -24,10 +24,9 @@ export default function NewLeague() {
           field: field,
           major: major,
         }),
-      });
-
-      const json = await result.json();
-      console.log(json);
+      })
+        .then((response) => response.json())
+        .then((data) => navigation.navigate('New', { id: data.leagueId }));
     } catch (error) {
       console.error(error);
     }
