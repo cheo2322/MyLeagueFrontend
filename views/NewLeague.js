@@ -2,15 +2,17 @@ import { useState } from 'react';
 import { SafeAreaView, StyleSheet, TextInput } from 'react-native';
 import Button from '../components/Button';
 
-export default function New() {
+import { API_BASE_URL } from '@env';
+
+export default function NewLeague() {
   const [name, onChangeName] = useState('');
   const [location, onChangeLocation] = useState('');
   const [field, onChangeField] = useState('');
   const [major, onChangeMajor] = useState('');
 
-  const pickImageAsync = async () => {
+  const postLeague = async () => {
     try {
-      return await fetch('http://localhost:8080/my_league/v1/league', {
+      const result = await fetch(`${API_BASE_URL}/my_league/v1/league`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -23,6 +25,9 @@ export default function New() {
           major: major,
         }),
       });
+
+      const json = await result.json();
+      console.log(json);
     } catch (error) {
       console.error(error);
     }
@@ -55,7 +60,7 @@ export default function New() {
         placeholder="Major"
       />
 
-      <Button label="Next" onPress={pickImageAsync} />
+      <Button label="Next" onPress={postLeague} />
     </SafeAreaView>
   );
 }
