@@ -1,14 +1,19 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
 import ImageViewer from '../components/ImageViewer';
 import Button from '../components/Button';
 
+import { API_BASE_URL } from '@env';
+
 const PlaceholderImage = require('../assets/images/default_league.png');
 
-export default function PictureSelector() {
+export default function PictureSelector({ route, navigation }) {
+  const { league } = route.params;
+  console.log(league);
+
   const [selectedImage, setSelectedImage] = useState(null);
 
   const pickImageAsync = async () => {
@@ -24,7 +29,22 @@ export default function PictureSelector() {
     }
   };
 
-  const next = () => {};
+  const next = async () => {
+    try {
+      await fetch(`${API_BASE_URL}/my_league/v1/league`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(league),
+      })
+        .then((response) => response.json())
+        .then((data) => navigation.navigate('Teams', { id: data.leagueId }));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <View style={styles.container}>

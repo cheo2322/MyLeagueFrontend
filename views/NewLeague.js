@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { SafeAreaView, StyleSheet, TextInput } from 'react-native';
 import Button from '../components/Button';
-
-import { API_BASE_URL } from '@env';
+import { View } from 'react-native';
 
 export default function NewLeague({ navigation }) {
   const [name, onChangeName] = useState('');
@@ -10,28 +9,15 @@ export default function NewLeague({ navigation }) {
   const [field, onChangeField] = useState('');
   const [major, onChangeMajor] = useState('');
 
-  const postLeague = async () => {
-    try {
-      await fetch(`${API_BASE_URL}/my_league/v1/league`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: name,
-          location: location,
-          field: field,
-          major: major,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) =>
-          navigation.navigate('LeagueImageSelector', { id: data.leagueId })
-        );
-    } catch (error) {
-      console.error(error);
-    }
+  const postLeague = () => {
+    const league = {
+      name: name,
+      location: location,
+      field: field,
+      major: major,
+    };
+
+    navigation.navigate('PictureSelector', { league: league });
   };
 
   return (
