@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  Text,
-  ActivityIndicator,
-} from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { FloatingAction } from 'react-native-floating-action';
-
-import CircleButton from '../components/CircleButton';
 
 import { API_BASE_URL } from '@env';
 
@@ -69,7 +61,7 @@ export default function Main({ navigation }) {
               goToNewLeague();
               break;
             case 'edit_league':
-              console.log(name);
+              navigation.navigate('MyLeagues', {});
               break;
           }
         }}

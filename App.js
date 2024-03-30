@@ -5,6 +5,7 @@ import Main from './views/Main';
 import NewLeague from './views/NewLeague';
 import PictureSelector from './views/PictureSelector';
 import Teams from './views/Teams';
+import MyLeagues from './views/MyLeagues';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ export default function App() {
         <Stack.Screen name="New" component={NewLeague} />
         <Stack.Screen name="PictureSelector" component={PictureSelector} />
         <Stack.Screen name="Teams" component={Teams} />
+        <Stack.Screen name="MyLeagues" component={MyLeagues} />
       </Stack.Navigator>
     </NavigationContainer>
   );
