@@ -36,13 +36,7 @@ export default function MyLeagues({ navigation }) {
   }, []);
 
   const getLeague = async (id) => {
-    await fetch(`${API_BASE_URL}/my_league/v1/league/${id}`)
-      .then((result) => result.json())
-      .then((json) => {
-        json.teams
-          ? console.log(json)
-          : navigation.navigate('Teams', { id: id });
-      });
+    navigation.navigate('Teams', { id: id });
   };
 
   const renderItem = ({ item }) => {
