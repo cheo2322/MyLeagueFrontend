@@ -6,10 +6,32 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
+import { FloatingAction } from 'react-native-floating-action';
 
 import CircleButton from '../components/CircleButton';
 
 import { API_BASE_URL } from '@env';
+
+const actions = [
+  {
+    text: 'Add a new league',
+    icon: require('../assets/images/icons/cup.png'),
+    name: 'new_cup',
+    position: 3,
+  },
+  {
+    text: 'Edit my league',
+    icon: require('../assets/images/icons/cup.png'),
+    name: 'edit_league',
+    position: 2,
+  },
+  {
+    text: 'Edit my team',
+    icon: require('../assets/images/icons/ball.png'),
+    name: 'edit_team',
+    position: 1,
+  },
+];
 
 export default function Main({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +52,7 @@ export default function Main({ navigation }) {
   };
 
   return (
-    <SafeAreaView>
+    <View style={styles.container}>
       <View>
         {isLoading ? (
           <ActivityIndicator color={'red'} size="large" />
@@ -38,37 +60,26 @@ export default function Main({ navigation }) {
           data.map((item) => <Text key={item.leagueId}>{item.name}</Text>)
         )}
       </View>
-      <View>
-        <CircleButton onPress={goToNewLeague} />
-      </View>
-    </SafeAreaView>
+
+      <FloatingAction
+        actions={actions}
+        onPressItem={(name) => {
+          switch (name) {
+            case 'new_cup':
+              goToNewLeague();
+              break;
+            case 'edit_league':
+              console.log(name);
+              break;
+          }
+        }}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
-    alignItems: 'center',
-  },
-  imageContainer: {
-    flex: 1,
-    paddingTop: 58,
-  },
-  footerContainer: {
-    flex: 1 / 3,
-    alignItems: 'center',
-  },
-  optionsContainer: {
-    position: 'absolute',
-  },
-  optionsRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  horizontal: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
   },
 });
